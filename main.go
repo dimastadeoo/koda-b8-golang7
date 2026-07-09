@@ -7,11 +7,12 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type Character []struct {
-	Id       int     `json:"id"`
-	Name     string  `json:"name"`
+	Id    int    `json:"id"`
+	Name  string `json:"name"`
 	Image string `json:"image"`
 }
 
@@ -42,24 +43,25 @@ func parseData(data string) Results {
 	return dataCharacter
 }
 
-func getData(data *string){
+func getData(data *string) {
 	*data = fetch("https://rickandmortyapi.com/api/character")
 
 }
 
-
-
-
 func main() {
 	data := ""
 	go getData(&data)
+	spinner := []string{"|", "/", "-", "\\"}
+	i := 0
 
-	for data == ""{
-		fmt.Println("Loading Data...")
+	for data == "" {
+		fmt.Printf("\rMengunduh data... %s", spinner[i])
+		i = (i + 1) % len(spinner)
+		time.Sleep(100 * time.Millisecond)
 	}
 
 	dataCharacter := parseData(data).Result
-	
+
 	// fmt.Println("--------------------------------------------------------")
 	// fmt.Println("Semua Data: ")
 
@@ -69,24 +71,23 @@ func main() {
 	// }
 	// fmt.Println("--------------------------------------------------------")
 
-
 	var choice string
 
 	for {
-    	feature.CallClear()
-		fmt.Println("Data Loaded")
+		feature.CallClear()
+		fmt.Println("Data Load")
 		fmt.Print("Cari Nama Karakter Ketik 0 jika ingin Exit: ")
 		fmt.Scan(&choice)
 		choice = strings.ToLower(choice)
 
-		if choice == "0"{
+		if choice == "0" {
 			break
-		} 
+		}
 
 		dataSearchs := Character{}
 
-		for _, character := range dataCharacter{
-			if strings.Contains(strings.ToLower(character.Name), choice){
+		for _, character := range dataCharacter {
+			if strings.Contains(strings.ToLower(character.Name), choice) {
 				dataSearchs = append(dataSearchs, character)
 			}
 		}
@@ -96,9 +97,9 @@ func main() {
 			fmt.Println("Not Found!")
 		}
 
-		for i, dataSearch := range dataSearchs{
+		for i, dataSearch := range dataSearchs {
 			fmt.Printf("%d. ", i+1)
-			fmt.Printf("%s\n",dataSearch.Name)
+			fmt.Printf("%s\n", dataSearch.Name)
 		}
 		fmt.Println("--------------------------------------------------------")
 
