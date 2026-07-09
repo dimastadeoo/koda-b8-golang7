@@ -42,12 +42,22 @@ func parseData(data string) Results {
 	return dataCharacter
 }
 
+func getData(data *string){
+	*data = fetch("https://rickandmortyapi.com/api/character")
+
+}
+
 
 
 
 func main() {
+	data := ""
+	go getData(&data)
 
-	data := fetch("https://rickandmortyapi.com/api/character")
+	for data == ""{
+		fmt.Println("Loading Data...")
+	}
+
 	dataCharacter := parseData(data).Result
 	
 	// fmt.Println("--------------------------------------------------------")
@@ -64,6 +74,7 @@ func main() {
 
 	for {
     	feature.CallClear()
+		fmt.Println("Data Loaded")
 		fmt.Print("Cari Nama Karakter Ketik 0 jika ingin Exit: ")
 		fmt.Scan(&choice)
 		choice = strings.ToLower(choice)
