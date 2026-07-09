@@ -1,6 +1,8 @@
 package feature
 
 import (
+	"bufio"
+	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
@@ -30,4 +32,9 @@ func CallClear() {
     } else { //unsupported platform
         panic("Your platform is unsupported! I can't clear terminal screen :(")
     }
+}
+
+func WaitForKey(mess string) {
+	fmt.Printf("\n%s", mess)
+	bufio.NewReader(os.Stdin).ReadString('\n')
 }

@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"strings"
-	"time"
 )
 
 type Character []struct {
@@ -45,6 +44,7 @@ func parseData(data string) Results {
 
 
 
+
 func main() {
 
 	data := fetch("https://rickandmortyapi.com/api/character")
@@ -63,11 +63,14 @@ func main() {
 	var choice string
 
 	for {
-		time.Sleep(2 * time.Second)
     	feature.CallClear()
 		fmt.Print("Cari Nama Karakter Ketik 0 jika ingin Exit: ")
 		fmt.Scan(&choice)
 		choice = strings.ToLower(choice)
+
+		if choice == "0"{
+			break
+		} 
 
 		dataSearchs := Character{}
 
@@ -88,11 +91,8 @@ func main() {
 		}
 		fmt.Println("--------------------------------------------------------")
 
+		feature.WaitForKey("Tekan Enter untuk Ulangi lagi")
 
-
-		if choice == "0"{
-			break
-		}
 	}
 
 }
