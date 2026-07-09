@@ -2,10 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"fetching-data/feature"
 	"fmt"
 	"io"
 	"net/http"
-	
+	"strings"
+	"time"
 )
 
 type Character []struct {
@@ -45,6 +47,52 @@ func parseData(data string) Results {
 
 func main() {
 
+	data := fetch("https://rickandmortyapi.com/api/character")
+	dataCharacter := parseData(data).Result
 	
+	// fmt.Println("--------------------------------------------------------")
+	// fmt.Println("Semua Data: ")
+
+	// for i, character := range dataCharacter{
+	// 	fmt.Printf("%d. ", i+1)
+	// 	fmt.Printf("%s\n",character.Name)
+	// }
+	// fmt.Println("--------------------------------------------------------")
+
+
+	var choice string
+
+	for {
+		time.Sleep(2 * time.Second)
+    	feature.CallClear()
+		fmt.Print("Cari Nama Karakter Ketik 0 jika ingin Exit: ")
+		fmt.Scan(&choice)
+		choice = strings.ToLower(choice)
+
+		dataSearchs := Character{}
+
+		for _, character := range dataCharacter{
+			if strings.Contains(strings.ToLower(character.Name), choice){
+				dataSearchs = append(dataSearchs, character)
+			}
+		}
+		fmt.Println("--------------------------------------------------------")
+		fmt.Println("Hasil Pencarian:")
+		if dataSearchs != nil {
+			fmt.Println("Not Found!")
+		}
+
+		for i, dataSearch := range dataSearchs{
+			fmt.Printf("%d. ", i+1)
+			fmt.Printf("%s\n",dataSearch.Name)
+		}
+		fmt.Println("--------------------------------------------------------")
+
+
+
+		if choice == "0"{
+			break
+		}
+	}
 
 }
