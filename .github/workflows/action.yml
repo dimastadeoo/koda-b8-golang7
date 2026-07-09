@@ -1,4 +1,4 @@
-name: Automation build APP Golang Fetch API Rick & Morty Multi Platfrom
+name: Automation build APP And Images Golang Fetch API Rick & Morty Multi Platfrom
 run-name: ${{github.event.head_commit.message}}
 
 on:
