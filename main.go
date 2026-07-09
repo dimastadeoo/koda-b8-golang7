@@ -55,7 +55,7 @@ func main() {
 	i := 0
 
 	for data == "" {
-		fmt.Printf("\rMengunduh data... %s", spinner[i])
+		fmt.Printf("\rLoading Data... %s", spinner[i])
 		i = (i + 1) % len(spinner)
 		time.Sleep(100 * time.Millisecond)
 	}
@@ -75,7 +75,7 @@ func main() {
 
 	for {
 		feature.CallClear()
-		fmt.Println("Data Load")
+		fmt.Println("Load Data API Rick & Murty Success")
 		fmt.Print("Cari Nama Karakter Ketik 0 jika ingin Exit: ")
 		fmt.Scan(&choice)
 		choice = strings.ToLower(choice)
@@ -92,8 +92,8 @@ func main() {
 			}
 		}
 		fmt.Println("--------------------------------------------------------")
-		fmt.Println("Hasil Pencarian:")
-		if dataSearchs != nil {
+		fmt.Println("Hasil Pencarian: ")
+		if len(dataSearchs) == 0  {
 			fmt.Println("Not Found!")
 		}
 
